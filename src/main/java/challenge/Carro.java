@@ -1,5 +1,7 @@
 package challenge;
 
+import java.util.Objects;
+
 public class Carro {
 
     private final Motorista motorista;
@@ -86,6 +88,8 @@ public class Carro {
         }
 
         public Carro build() {
+            Validador.validaNull(placa.equals(null) || cor.equals(null));
+            Validador.validaEstacionamento(Objects.isNull(motorista));
             return new Carro(motorista, placa, cor);
         }
     }

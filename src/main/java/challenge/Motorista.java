@@ -1,6 +1,8 @@
 package challenge;
 
 
+import java.util.Objects;
+
 public class Motorista {
 
     private final String nome;
@@ -11,7 +13,12 @@ public class Motorista {
 
     private final String habilitacao;
 
+    public static final int MAIOR_IDADE_PERMITIDA=18;
+
     private Motorista(String nome, int idade, int pontos, String habilitacao) {
+        Validador.validaNull(Objects.isNull(nome) || nome.isEmpty());
+        Validador.validaEstacionamento(Objects.isNull(habilitacao) || habilitacao.isEmpty());
+
         this.nome = nome;
         this.idade = idade;
         this.pontos = pontos;
@@ -86,11 +93,14 @@ public class Motorista {
         }
 
         public MotoristaBuilder withIdade(int idade) {
+            Validador.validaNumber(idade<0);
             this.idade = idade;
             return this;
         }
 
         public MotoristaBuilder withPontos(int pontos) {
+            Validador.validaNumber(pontos<0);
+            Validador.validaEstacionamento(pontos>21);
             this.pontos = pontos;
             return this;
         }
@@ -102,6 +112,10 @@ public class Motorista {
 
 
         public Motorista build() {
+            Validador.validaNull(Objects.isNull(nome) || nome.isEmpty());
+            Validador.validaNull(Objects.isNull(habilitacao) || habilitacao.isEmpty());
+            Validador.validaEstacionamento(idade<18);
+
             return new Motorista(nome, idade, pontos, habilitacao);
         }
     }
