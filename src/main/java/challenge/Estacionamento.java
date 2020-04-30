@@ -29,15 +29,13 @@ public class Estacionamento {
     //extra
     private void trataLotacaoExcedente(Carro carro){
         if (vagas.get(0).getMotorista().getIdade()>55) {
-                int x=1;
-                while (x<carrosEstacionados()){
-                    if (vagas.get(x).getMotorista().getIdade()<55){
-                        vagas.remove(x);
-                        return;
-                    }
-                    x++;
+            for (Carro c: vagas) {
+                if (c.getMotorista().getIdade()<55){
+                    vagas.remove(c);
+                    return;
                 }
-                throw new EstacionamentoException("Lotado");
+            }
+            throw new EstacionamentoException("Lotado");
         }
         vagas.remove(0);
     }
